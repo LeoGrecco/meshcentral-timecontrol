@@ -2,9 +2,9 @@
   "name": "Controle de Tempo de Trabalho",
   "id": "meshcentral-timecontrol",
   "version": "1.0.0",
-  "description": "Monitora as sessões de usuários ativos e calcula o tempo de trabalho diário.",
-  "author": "Leonardo Grecco",
+  "description": "Monitora as sessoes de usuarios ativos e calcula o tempo de trabalho.",
+  "author": "LeoGrecco",
   "meshcentral_version": ">=0.9.0",
-  "repository": "https://github.com",
+  "repository": "https://github.com/LeoGrecco/meshcentral-timecontrol",
   "downloadUrl": "https://githubusercontent.com"
 }
