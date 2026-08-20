@@ -1,10 +1,10 @@
 {
   "name": "Controle de Tempo de Trabalho",
-  "id": "meshcentral-timecontrol",
-  "version": "1.0.1",
-  "description": "Monitora as sessoes de usuarios ativos e calcula o tempo de trabalho diario por computador.",
+  "id": "timecontrol",
+  "version": "1.0.3",
+  "description": "Exibe o tempo de sessao ativa dos usuarios logados.",
   "author": "LeoGrecco",
   "meshcentral_version": ">=0.9.0",
-  "repository": "https://github.com",
-  "downloadUrl": "https://github.com/LeoGrecco/meshcentral-timecontrol/blob/main/timecontrol.js"
+  "modules": ["timecontrol.js"],
+  "capabilities": ["deviceSelectedTab"]
 }
