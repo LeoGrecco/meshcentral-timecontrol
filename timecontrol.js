@@ -1,16 +1,13 @@
-// Padrão de exportação do MeshCentral Plugin System
 module.exports = {
-    meshcentral_plugin: function (pluginHandler) {
+    meshcentral_timecontrol: function (pluginHandler) {
         var obj = {};
         obj.parent = pluginHandler;
         obj.name = "Controle de Tempo";
 
-        // Registra o gancho visual no ecossistema
         obj.registerHook = function() {
             return ["onWebUIStart"];
         };
 
-        // Injeta o botão da aba na tela do dispositivo
         obj.onWebUIStart = function () {
             if (obj.parent && typeof obj.parent.registerOnDeviceSelectedTab === 'function') {
                 obj.parent.registerOnDeviceSelectedTab({
@@ -21,7 +18,6 @@ module.exports = {
             }
         };
 
-        // Renderiza a tabela dentro do painel do Leonardo
         obj.desenharInterfaceTempo = function (nodeid, container) {
             container.innerHTML = `
                 <div style="padding:20px; font-family: sans-serif; color: #333;">
@@ -37,16 +33,15 @@ module.exports = {
                             </tr>
                         </thead>
                         <tbody id="tabela-tempo-corpo">
-                            <tr><td colspan="5" style="padding:15px; text-align:center;">Carregando logs de auditoria do banco de dados...</td></tr>
+                            <tr><td colspan="5" style="padding:15px; text-align:center;">Carregando logs de auditoria...</td></tr>
                         </tbody>
                     </table>
                 </div>
             `;
 
-            // Puxa os dados reais de eventos que o Agente do Windows envia para o Servidor
             obj.parent.getDeviceEvents(nodeid, function (events) {
                 if (!events || events.length === 0) {
-                    document.getElementById("tabela-tempo-corpo").innerHTML = '<tr><td colspan="5" style="padding:15px; text-align:center;">Nenhum registro encontrado para este dispositivo.</td></tr>';
+                    document.getElementById("tabela-tempo-corpo").innerHTML = '<tr><td colspan="5" style="padding:15px; text-align:center;">Nenhum registro encontrado.</td></tr>';
                     return;
                 }
 
@@ -58,13 +53,11 @@ module.exports = {
                     let ev = events[i];
                     let msg = ev.msg ? ev.msg.toLowerCase() : "";
 
-                    // Filtra o log exato de quando o funcionário destrava ou loga na máquina
                     if (msg.includes("user login") || msg.includes("logged in") || msg.includes("session authenticated")) {
                         loginTemp = new Date(ev.time);
                         let match = ev.msg.match(/user\s+([^\s]+)/i);
                         usuarioNome = match ? match[1] : (ev.user ? ev.user : "Funcionário");
                     } 
-                    // Filtra o encerramento da atividade
                     else if ((msg.includes("user logout") || msg.includes("logged out") || msg.includes("agent disconnect")) && loginTemp !== null) {
                         let logoutTime = new Date(ev.time);
                         let diferencaMilissegundos = logoutTime - loginTemp;
